@@ -114,6 +114,7 @@ class build_regexes(Command):
                 fp.write(force_bytes("        %r,\n" % device_parser.get("family_replacement")))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("v1_replacement")))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("v2_replacement")))
+                fp.write(force_bytes("        %r,\n" % "i"))
                 fp.write(b"    ),\n")
             fp.write(b"]\n")
             fp.write(b"\n")
@@ -121,7 +122,7 @@ class build_regexes(Command):
             for device_parser in regexes["device_parsers"]:
                 fp.write(b"    DeviceParser(\n")
                 fp.write(force_bytes("        %r,\n" % device_parser["regex"]))
-                fp.write(force_bytes("        %r,\n" % device_parser.get("regex_flag")))
+                fp.write(force_bytes("        %r,\n" % "i"))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("device_replacement")))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("brand_replacement")))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("model_replacement")))
@@ -137,6 +138,7 @@ class build_regexes(Command):
                 fp.write(force_bytes("        %r,\n" % device_parser.get("os_v2_replacement")))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("os_v3_replacement")))
                 fp.write(force_bytes("        %r,\n" % device_parser.get("os_v4_replacement")))
+                fp.write(force_bytes("        %r,\n" % "i"))
                 fp.write(b"    ),\n")
             fp.write(b"]\n")
             # fmt: on

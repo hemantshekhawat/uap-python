@@ -24,7 +24,7 @@ __author__ = "Lindsey Simon <elsigh@gmail.com>"
 
 class UserAgentParser(object):
     def __init__(
-        self, pattern, family_replacement=None, v1_replacement=None, v2_replacement=None
+        self, pattern, family_replacement=None, v1_replacement=None, v2_replacement=None, regex_flag="i"
     ):
         """Initialize UserAgentParser.
 
@@ -35,7 +35,11 @@ class UserAgentParser(object):
           v2_replacement: a string to override the matched v2 (optional)
         """
         self.pattern = pattern
-        self.user_agent_re = re.compile(self.pattern)
+        if regex_flag == "i":
+            self.user_agent_re = re.compile(self.pattern, re.IGNORECASE)
+        else:
+            self.user_agent_re = re.compile(self.pattern)
+
         self.family_replacement = family_replacement
         self.v1_replacement = v1_replacement
         self.v2_replacement = v2_replacement
@@ -86,6 +90,7 @@ class OSParser(object):
         os_v2_replacement=None,
         os_v3_replacement=None,
         os_v4_replacement=None,
+        regex_flag="i",
     ):
         """Initialize UserAgentParser.
 
@@ -98,7 +103,10 @@ class OSParser(object):
           os_v4_replacement: a string to override the matched v4 (optional)
         """
         self.pattern = pattern
-        self.user_agent_re = re.compile(self.pattern)
+        if regex_flag == "i":
+            self.user_agent_re = re.compile(self.pattern, re.IGNORECASE)
+        else:
+            self.user_agent_re = re.compile(self.pattern)
         self.os_replacement = os_replacement
         self.os_v1_replacement = os_v1_replacement
         self.os_v2_replacement = os_v2_replacement
@@ -165,7 +173,7 @@ class DeviceParser(object):
     def __init__(
         self,
         pattern,
-        regex_flag=None,
+        regex_flag="i",
         device_replacement=None,
         brand_replacement=None,
         model_replacement=None,
@@ -487,10 +495,11 @@ if UA_PARSER_YAML:
         _family_replacement = _ua_parser.get("family_replacement")
         _v1_replacement = _ua_parser.get("v1_replacement")
         _v2_replacement = _ua_parser.get("v2_replacement")
+        _regex_flag = _ua_parser.get("regex_flag", "i")
 
         USER_AGENT_PARSERS.append(
             UserAgentParser(
-                _regex, _family_replacement, _v1_replacement, _v2_replacement
+                _regex, _family_replacement, _v1_replacement, _v2_replacement, _regex_flag
             )
         )
 
@@ -503,6 +512,7 @@ if UA_PARSER_YAML:
         _os_v2_replacement = _os_parser.get("os_v2_replacement")
         _os_v3_replacement = _os_parser.get("os_v3_replacement")
         _os_v4_replacement = _os_parser.get("os_v4_replacement")
+        _regex_flag = _os_parser.get("regex_flag", "i")
 
         OS_PARSERS.append(
             OSParser(
@@ -512,6 +522,7 @@ if UA_PARSER_YAML:
                 _os_v2_replacement,
                 _os_v3_replacement,
                 _os_v4_replacement,
+                _regex_flag
             )
         )
 
